@@ -1,0 +1,18 @@
+# Development dependencies
+pytest>=6.0
+pytest-cov>=2.0
+pytest-asyncio>=0.20.0
+black>=21.0
+flake8>=3.8
+mypy>=0.812
+
+# WebSocket testing dependencies  
+pytest-aiohttp>=1.0.0
+
+# Build dependencies
+setuptools>=45.0
+wheel>=0.36
+twine>=3.0
+
+# Platform-specific printer dependencies (Windows)
+pywin32>=227; sys_platform == "win32"

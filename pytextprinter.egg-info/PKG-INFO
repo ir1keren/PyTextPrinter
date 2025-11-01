@@ -1,0 +1,96 @@
+Metadata-Version: 2.4
+Name: pytextprinter
+Version: 0.1.0
+Summary: A Python library for advanced text printing utilities
+Home-page: https://github.com/ir1keren/pytextprinter
+Author: Irwan Darmawan
+Author-email: ir1keren@gmail.com
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov>=2.0; extra == "dev"
+Requires-Dist: black>=21.0; extra == "dev"
+Requires-Dist: flake8>=3.8; extra == "dev"
+Requires-Dist: mypy>=0.812; extra == "dev"
+Provides-Extra: hardware
+Requires-Dist: pywin32>=227; sys_platform == "win32" and extra == "hardware"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: provides-extra
+Dynamic: requires-python
+Dynamic: summary
+
+# PyTextPrinter
+
+A Python library for advanced text printing utilities.
+
+## Features
+
+- Colorful text printing
+- Text formatting and styling
+- Table printing
+- Progress bars
+- Banner text generation
+
+## Installation
+
+```bash
+pip install pytextprinter
+```
+
+## Quick Start
+
+```python
+from pytextprinter import TextPrinter
+
+printer = TextPrinter()
+printer.print_colored("Hello, World!", color="green")
+printer.print_banner("Welcome to PyTextPrinter")
+```
+
+## Development
+
+### Setup Development Environment
+
+```bash
+pip install -e .
+pip install -r requirements-dev.txt
+```
+
+### Running Tests
+
+```bash
+pytest
+```
+
+### Building Documentation
+
+```bash
+cd docs
+make html
+```
+
+## License
+
+MIT License - see LICENSE file for details.
+
+## Contributing
+
+Contributions are welcome! Please read our contributing guidelines and submit pull requests.
