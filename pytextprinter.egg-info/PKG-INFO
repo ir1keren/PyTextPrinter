@@ -18,6 +18,9 @@ Classifier: Programming Language :: Python :: 3.11
 Requires-Python: >=3.7
 Description-Content-Type: text/markdown
 License-File: LICENSE
+Requires-Dist: python-socketio[asyncio]>=5.7.0
+Requires-Dist: aiohttp>=3.8.0
+Requires-Dist: websockets>=10.0
 Provides-Extra: dev
 Requires-Dist: pytest>=6.0; extra == "dev"
 Requires-Dist: pytest-cov>=2.0; extra == "dev"
@@ -26,6 +29,10 @@ Requires-Dist: flake8>=3.8; extra == "dev"
 Requires-Dist: mypy>=0.812; extra == "dev"
 Provides-Extra: hardware
 Requires-Dist: pywin32>=227; sys_platform == "win32" and extra == "hardware"
+Provides-Extra: websocket
+Requires-Dist: python-socketio[asyncio]>=5.7.0; extra == "websocket"
+Requires-Dist: aiohttp>=3.8.0; extra == "websocket"
+Requires-Dist: websockets>=10.0; extra == "websocket"
 Dynamic: author
 Dynamic: author-email
 Dynamic: classifier
@@ -34,20 +41,23 @@ Dynamic: description-content-type
 Dynamic: home-page
 Dynamic: license-file
 Dynamic: provides-extra
+Dynamic: requires-dist
 Dynamic: requires-python
 Dynamic: summary
 
 # PyTextPrinter
 
-A Python library for advanced text printing utilities.
+A Python library for advanced text printing utilities and ESC/POS thermal printer support.
 
 ## Features
 
-- Colorful text printing
 - Text formatting and styling
 - Table printing
 - Progress bars
 - Banner text generation
+- Cross-platform hardware printer support (Windows/Linux/macOS)
+- ESC/POS command support for thermal/receipt printers
+- **WebSocket API with Socket.IO compatibility** - [See WebSocket Documentation](WEBSOCKET_IMPLEMENTATION.md)
 
 ## Installation
 
@@ -61,9 +71,48 @@ pip install pytextprinter
 from pytextprinter import TextPrinter
 
 printer = TextPrinter()
-printer.print_colored("Hello, World!", color="green")
+printer.print_text("Hello, World!")
 printer.print_banner("Welcome to PyTextPrinter")
 ```
+
+## WebSocket API
+
+PyTextPrinter now includes complete WebSocket support with Socket.IO compatibility! Access all printer functionality over the network in real-time.
+
+### Quick WebSocket Example
+
+```python
+# Start WebSocket Server
+from pytextprinter.websocket_server import PyTextPrinterWebSocketServer
+import asyncio
+
+async def start_server():
+    server = PyTextPrinterWebSocketServer(host='localhost', port=8080)
+    await server.start_server()
+
+asyncio.run(start_server())
+```
+
+```python
+# WebSocket Client
+from pytextprinter.websocket_client import PyTextPrinterWebSocketClient
+import asyncio
+
+async def client_example():
+    client = PyTextPrinterWebSocketClient('http://localhost:8080')
+    await client.connect()
+    
+    # Use any PyTextPrinter function via WebSocket
+    await client.print_text("Hello WebSocket!")
+    await client.list_printers()
+    await client.print_to_hardware("Receipt text\n")
+    
+    await client.disconnect()
+
+asyncio.run(client_example())
+```
+
+**📖 For complete WebSocket documentation, examples, and API reference, see: [WEBSOCKET_IMPLEMENTATION.md](WEBSOCKET_IMPLEMENTATION.md)**
 
 ## Development
 
