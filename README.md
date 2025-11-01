@@ -1,4 +1,5 @@
 # PyTextPrinter
+[![Support on Ko‑fi](https://img.shields.io/badge/Support%20on-Ko%E2%80%91fi-ff5e5b?logo=kofi&logoColor=white)](https://ko-fi.com/D1D0118VLG)
 
 A Python library for advanced text printing utilities and ESC/POS thermal printer support.
 
@@ -96,3 +97,5 @@ MIT License - see LICENSE file for details.
 ## Contributing
 
 Contributions are welcome! Please read our contributing guidelines and submit pull requests.
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D0118VLG)
