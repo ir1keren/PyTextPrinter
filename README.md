@@ -1,10 +1,9 @@
 # PyTextPrinter
 
-A Python library for advanced text printing utilities.
+A Python library for advanced text printing utilities and ESC/POS thermal printer support.
 
 ## Features
 
-- Colorful text printing
 - Text formatting and styling
 - Table printing
 - Progress bars
@@ -25,7 +24,7 @@ pip install pytextprinter
 from pytextprinter import TextPrinter
 
 printer = TextPrinter()
-printer.print_colored("Hello, World!", color="green")
+printer.print_text("Hello, World!")
 printer.print_banner("Welcome to PyTextPrinter")
 ```
 
@@ -57,7 +56,7 @@ async def client_example():
     await client.connect()
     
     # Use any PyTextPrinter function via WebSocket
-    await client.print_colored("Hello WebSocket!", color="green", bold=True)
+    await client.print_text("Hello WebSocket!")
     await client.list_printers()
     await client.print_to_hardware("Receipt text\n")
     

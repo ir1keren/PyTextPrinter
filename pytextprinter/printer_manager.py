@@ -242,20 +242,12 @@ class PrinterManager:
             'is_shared': printer_info.is_shared,
             'location': printer_info.location,
             'comment': printer_info.comment,
-            'supports_color': self._supports_color(printer_info),
             'supports_graphics': self._supports_graphics(printer_info),
             'is_thermal': self._is_thermal_printer(printer_info),
             'platform_specific': printer_info.platform_specific
         }
         
         return capabilities
-    
-    def _supports_color(self, printer_info: PrinterInfo) -> bool:
-        """Determine if printer supports color printing."""
-        color_keywords = ['color', 'colour', 'inkjet']
-        printer_text = (printer_info.name + " " + printer_info.driver + " " + 
-                       printer_info.comment).lower()
-        return any(keyword in printer_text for keyword in color_keywords)
     
     def _supports_graphics(self, printer_info: PrinterInfo) -> bool:
         """Determine if printer supports graphics."""

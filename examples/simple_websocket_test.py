@@ -53,11 +53,11 @@ async def simple_test():
         # Test console printing
         print("\n3. Testing console printing...")
         
-        text_output = await client.print_colored("Hello WebSocket!", color="green", bold=True)
+        text_output = await client.print_text("Hello WebSocket!", bold=True)
         if text_output:
-            print(f"   ✓ Colored text: {repr(text_output.strip())}")
+            print(f"   ✓ Text: {repr(text_output.strip())}")
         else:
-            print("   ✗ Failed to print colored text")
+            print("   ✗ Failed to print text")
             
         # Test banner
         banner_output = await client.print_banner("TEST", char="*", width=20)

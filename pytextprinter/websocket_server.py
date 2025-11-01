@@ -153,11 +153,10 @@ class PyTextPrinterWebSocketServer:
         
         # Console printing functions
         @self.sio.event
-        async def print_colored(sid, data):
-            """Print colored text to console."""
+        async def print_text(sid, data):
+            """Print text to console."""
             try:
                 text = data.get('text', '')
-                color = data.get('color')
                 bold = data.get('bold', False)
                 end = data.get('end', '\n')
                 
@@ -165,17 +164,17 @@ class PyTextPrinterWebSocketServer:
                 import io
                 output_buffer = io.StringIO()
                 temp_printer = TextPrinter(output=output_buffer)
-                temp_printer.print_colored(text, color=color, bold=bold, end=end)
+                temp_printer.print_text(text, bold=bold, end=end)
                 output = output_buffer.getvalue()
                 
                 await self.sio.emit('text_printed', {
                     'success': True,
                     'output': output,
-                    'type': 'colored_text'
+                    'type': 'text'
                 }, room=sid)
                 
             except Exception as e:
-                await self._send_error(sid, 'print_colored', str(e))
+                await self._send_error(sid, 'print_text', str(e))
         
         @self.sio.event
         async def print_banner(sid, data):
@@ -229,12 +228,11 @@ class PyTextPrinterWebSocketServer:
             try:
                 items = data.get('items', [])
                 bullet = data.get('bullet', '•')
-                color = data.get('color')
                 
                 import io
                 output_buffer = io.StringIO()
                 temp_printer = TextPrinter(output=output_buffer)
-                temp_printer.print_list(items, bullet=bullet, color=color)
+                temp_printer.print_list(items, bullet=bullet)
                 output = output_buffer.getvalue()
                 
                 await self.sio.emit('list_printed', {
@@ -466,7 +464,7 @@ class PyTextPrinterWebSocketServer:
                     <h2>Available Functions</h2>
                     <div class="endpoint"><strong>list_printers</strong> - List available printers</div>
                     <div class="endpoint"><strong>select_printer</strong> - Select a specific printer</div>
-                    <div class="endpoint"><strong>print_colored</strong> - Print colored text to console</div>
+                    <div class="endpoint"><strong>print_text</strong> - Print text to console</div>
                     <div class="endpoint"><strong>print_to_hardware</strong> - Print text to hardware printer</div>
                     <div class="endpoint"><strong>print_hardware_barcode</strong> - Print barcode to hardware</div>
                     <div class="endpoint"><strong>print_hardware_qr_code</strong> - Print QR code to hardware</div>
@@ -477,7 +475,7 @@ class PyTextPrinterWebSocketServer:
 const socket = io('http://""" + self.host + """:""" + str(self.port) + """');
 
 socket.emit('list_printers', {text_only: true});
-socket.emit('print_colored', {text: 'Hello World!', color: 'green'});
+socket.emit('print_text', {text: 'Hello World!', bold: true});
 socket.emit('print_to_hardware', {text: 'Hello Hardware!'});
                     </code></pre>
                 </div>
@@ -501,7 +499,7 @@ socket.emit('print_to_hardware', {text: 'Hello Hardware!'});
         """Get list of available WebSocket functions."""
         return [
             'list_printers', 'select_printer', 'auto_select_printer', 'get_selected_printer',
-            'print_colored', 'print_banner', 'print_table', 'print_list',
+            'print_text', 'print_banner', 'print_table', 'print_list',
             'print_to_hardware', 'print_hardware_banner', 'print_hardware_barcode',
             'print_hardware_qr_code', 'print_hardware_receipt', 'open_cash_drawer',
             'send_raw_escpos', 'get_printer_status', 'is_printer_ready', 'get_server_info'

@@ -18,7 +18,7 @@ The PyTextPrinter library now includes complete WebSocket functionality with Soc
 2. `select_printer` - Select a specific printer
 3. `auto_select_printer` - Automatically select best available printer
 4. `get_selected_printer` - Get currently selected printer info
-5. `print_colored` - Print colored text to console
+5. `print_text` - Print text to console
 6. `print_banner` - Print formatted banners
 7. `print_table` - Print formatted tables
 8. `print_list` - Print formatted lists
@@ -60,7 +60,7 @@ async def client_example():
     await client.connect()
     
     # Use any PyTextPrinter function via WebSocket
-    await client.print_colored("Hello WebSocket!", color="green", bold=True)
+    await client.print_text("Hello WebSocket!", bold=True)
     await client.list_printers()
     await client.auto_select_printer()
     await client.print_to_hardware("Hello from WebSocket!\n")
@@ -94,7 +94,7 @@ Test Summary:
 - ✅ WebSocket connection and authentication
 - ✅ Socket.IO compatibility verified  
 - ✅ All 18 API endpoints functional
-- ✅ Console printing functions (colored text, banners, tables, lists)
+- ✅ Console printing functions (text, banners, tables, lists)
 - ✅ Printer discovery and selection
 - ✅ Hardware printing functions (text, barcodes, QR codes, receipts)
 - ✅ Utility functions (status, cash drawer, raw commands)
@@ -124,10 +124,9 @@ const socket = io('http://localhost:8080');
 socket.on('connect', () => {
     console.log('Connected to PyTextPrinter');
     
-    // Print colored text
-    socket.emit('print_colored', {
+    // Print text
+    socket.emit('print_text', {
         text: 'Hello from Node.js!',
-        color: 'blue',
         bold: true
     });
 });
@@ -145,7 +144,7 @@ client = PyTextPrinterSyncClient('http://localhost:8080')
 client.connect()
 
 # All functions available synchronously
-result = client.print_colored("Hello Sync!", color="red")
+result = client.print_text("Hello Sync!", bold=True)
 printers = client.list_printers()
 client.auto_select_printer()
 success = client.print_to_hardware("Receipt content\n")
@@ -182,7 +181,7 @@ Current implementation runs on localhost for development. For production:
 
 The WebSocket implementation is complete and ready for production use. The library now provides:
 
-1. ✅ **Core Text Printing** - Console output with colors, formatting, tables, lists
+1. ✅ **Core Text Printing** - Console output with formatting, tables, lists
 2. ✅ **Hardware Integration** - Cross-platform printer discovery and ESC/POS printing  
 3. ✅ **WebSocket API** - Real-time network access to all functionality
 4. ✅ **Socket.IO Compatibility** - Works with any Socket.IO client library

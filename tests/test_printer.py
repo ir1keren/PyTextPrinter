@@ -14,12 +14,18 @@ class TestTextPrinter:
         self.output = io.StringIO()
         self.printer = TextPrinter(output=self.output)
     
-    def test_print_colored(self):
-        """Test colored text printing."""
-        self.printer.print_colored("Hello", color="red")
+    def test_print_text(self):
+        """Test text printing."""
+        self.printer.print_text("Hello")
         output = self.output.getvalue()
         assert "Hello" in output
-        assert "\033[31m" in output  # Red color code
+    
+    def test_print_text_bold(self):
+        """Test bold text printing."""
+        self.printer.print_text("Hello", bold=True)
+        output = self.output.getvalue()
+        assert "Hello" in output
+        assert "\033[1m" in output  # Bold code
         assert "\033[0m" in output   # Reset code
     
     def test_print_banner(self):

@@ -81,12 +81,12 @@ async def test_websocket_functionality():
             # Test console printing functions
             print("\n3. Testing console printing functions...")
             
-            # Colored text
-            text_output = await client.print_colored("Hello WebSocket!", color="green", bold=True)
+            # Text printing
+            text_output = await client.print_text("Hello WebSocket!", bold=True)
             if text_output and "Hello WebSocket!" in text_output:
-                print("   ✓ Colored text printing works")
+                print("   ✓ Text printing works")
             else:
-                print("   ✗ Colored text printing failed")
+                print("   ✗ Text printing failed")
             
             # Banner
             banner_output = await client.print_banner("WEBSOCKET", char="*", width=30)
@@ -105,7 +105,7 @@ async def test_websocket_functionality():
             
             # List
             items = ["Real-time communication", "Cross-platform support", "Easy integration"]
-            list_output = await client.print_list(items, bullet="•", color="cyan")
+            list_output = await client.print_list(items, bullet="•")
             if list_output and "Real-time communication" in list_output:
                 print("   ✓ List printing works")
             else:

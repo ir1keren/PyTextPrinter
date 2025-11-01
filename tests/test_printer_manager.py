@@ -223,16 +223,7 @@ class TestPrinterManager:
         
         assert capabilities['name'] == "Epson TM-T88V"
         assert capabilities['is_thermal'] == True
-        assert 'supports_color' in capabilities
         assert 'supports_graphics' in capabilities
-    
-    def test_supports_color_detection(self):
-        """Test color support detection."""
-        color_printer = PrinterInfo("HP Color LaserJet", "HP Color Driver", "USB", "Ready")
-        mono_printer = PrinterInfo("Epson TM-T88V", "Epson Thermal", "USB", "Ready")
-        
-        assert self.manager._supports_color(color_printer) == True
-        assert self.manager._supports_color(mono_printer) == False
     
     def test_thermal_printer_detection(self):
         """Test thermal printer detection."""

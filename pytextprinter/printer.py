@@ -2,7 +2,6 @@
 
 import sys
 from typing import Optional, Union, List, Dict, Any
-from .colors import Colors
 from .formatters import TableFormatter, BannerFormatter
 from .printer_manager import PrinterManager
 from .printer_interface import PrinterInterface
@@ -28,21 +27,16 @@ class TextPrinter:
         self.printer_interface = PrinterInterface()
         self.escpos = ESCPOSCommandBuilder()
     
-    def print_colored(self, text: str, color: Optional[str] = None, 
-                     bold: bool = False, end: str = '\n') -> None:
-        """Print text with color formatting.
+    def print_text(self, text: str, bold: bool = False, end: str = '\n') -> None:
+        """Print text with optional bold formatting.
         
         Args:
             text: Text to print
-            color: Color name (red, green, blue, etc.)
-            bold: Whether to make text bold
+            bold: Whether to make text bold (using ANSI codes)
             end: String appended after the text
         """
-        if color:
-            color_code = Colors.get_color(color)
-            if bold:
-                color_code = color_code.replace('\033[', '\033[1;')
-            formatted_text = f"{color_code}{text}{Colors.RESET}"
+        if bold:
+            formatted_text = f"\033[1m{text}\033[0m"
         else:
             formatted_text = text
             
@@ -87,20 +81,15 @@ class TextPrinter:
         progress_text = f"[{bar}] {percentage:.1f}%"
         print(f"\r{progress_text}", end='', file=self.output)
     
-    def print_list(self, items: List[str], bullet: str = '•', 
-                  color: Optional[str] = None) -> None:
+    def print_list(self, items: List[str], bullet: str = '•') -> None:
         """Print a formatted list.
         
         Args:
             items: List of items to print
             bullet: Bullet character
-            color: Color for the bullets
         """
         for item in items:
-            if color:
-                self.print_colored(f"{bullet} {item}", color=color)
-            else:
-                print(f"{bullet} {item}", file=self.output)
+            print(f"{bullet} {item}", file=self.output)
     
     def print_dict(self, data: Dict[str, Any], indent: int = 2) -> None:
         """Print a dictionary in a formatted way.
@@ -111,8 +100,7 @@ class TextPrinter:
         """
         for key, value in data.items():
             spaces = ' ' * indent
-            self.print_colored(f"{spaces}{key}:", color='cyan', end=' ')
-            print(value, file=self.output)
+            print(f"{spaces}{key}: {value}", file=self.output)
     
     # Hardware Printer Methods
     def list_printers(self, text_only: bool = True, refresh: bool = False) -> List[PrinterInfo]:

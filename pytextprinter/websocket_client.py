@@ -190,20 +190,18 @@ class PyTextPrinterWebSocketClient:
         return None
     
     # Console printing methods
-    async def print_colored(self, text: str, color: Optional[str] = None, bold: bool = False) -> Optional[str]:
-        """Print colored text.
+    async def print_text(self, text: str, bold: bool = False) -> Optional[str]:
+        """Print text.
         
         Args:
             text: Text to print
-            color: Text color
             bold: Bold text
             
         Returns:
             Printed output or None if failed
         """
-        await self.sio.emit('print_colored', {
+        await self.sio.emit('print_text', {
             'text': text,
-            'color': color,
             'bold': bold
         })
         
@@ -257,21 +255,19 @@ class PyTextPrinterWebSocketClient:
             return response.get('output')
         return None
     
-    async def print_list(self, items: List[str], bullet: str = '•', color: Optional[str] = None) -> Optional[str]:
+    async def print_list(self, items: List[str], bullet: str = '•') -> Optional[str]:
         """Print a formatted list.
         
         Args:
             items: List items
             bullet: Bullet character
-            color: Text color
             
         Returns:
             Printed output or None if failed
         """
         await self.sio.emit('print_list', {
             'items': items,
-            'bullet': bullet,
-            'color': color
+            'bullet': bullet
         })
         
         response = await self.wait_for_response()
@@ -511,9 +507,9 @@ class PyTextPrinterSyncClient:
         """Select a printer."""
         return self._run_async(self.client.select_printer(printer_name))
     
-    def print_colored(self, text: str, color: Optional[str] = None, bold: bool = False) -> Optional[str]:
-        """Print colored text."""
-        return self._run_async(self.client.print_colored(text, color, bold))
+    def print_text(self, text: str, bold: bool = False) -> Optional[str]:
+        """Print text."""
+        return self._run_async(self.client.print_text(text, bold))
     
     def print_to_hardware(self, text: str, encoding: str = 'cp437') -> bool:
         """Print to hardware."""

@@ -68,10 +68,10 @@ async def main():
         # Test console printing
         print("\n5. Testing console printing...")
         
-        # Print colored text
-        output = await client.print_colored("Hello from WebSocket!", color="green", bold=True)
+        # Print text
+        output = await client.print_text("Hello from WebSocket!", bold=True)
         if output:
-            print(f"   Colored text output: {repr(output.strip())}")
+            print(f"   Text output: {repr(output.strip())}")
         
         # Print banner
         banner_output = await client.print_banner("WEBSOCKET TEST", char="*", width=30)
@@ -95,7 +95,7 @@ async def main():
         
         # Print list
         items = ["Real-time communication", "Cross-platform support", "Easy integration"]
-        list_output = await client.print_list(items, bullet="→", color="cyan")
+        list_output = await client.print_list(items, bullet="→")
         if list_output:
             print("   List printed:")
             for line in list_output.strip().split('\n'):
@@ -185,8 +185,8 @@ async def simple_example():
         await client.connect()
         await asyncio.sleep(0.5)  # Wait for connection
         
-        # Print colored text
-        output = await client.print_colored("Simple WebSocket Test", color="blue", bold=True)
+        # Print text
+        output = await client.print_text("Simple WebSocket Test", bold=True)
         print(f"Output: {output}")
         
         # List printers
